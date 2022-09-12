@@ -1,0 +1,24 @@
+nav {
+	position: fixed;
+	display: flex;
+	justify-content: space-between;
+	width: 100vw;
+}
+
+.icons {
+	display: flex;
+	margin: 1vw;
+}
+
+li a img {
+	height: 40px;
+	object-fit: cover;
+	margin: 20px;
+}
+
+@media (max-width: 970px) {
+	nav {
+		position: relative;
+		justify-content: center;
+	}
+}

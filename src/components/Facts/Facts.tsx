@@ -1,39 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './styles.css';
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-export default function Facts() {
-  const [randomFact, setRandomFact] = useState([]);
-  const [teste, setTeste] = useState(1);
+import './styles.css'
+
+type FactType = {
+  fact: string
+}
+
+export const Facts = () => {
+  const [randomFact, setRandomFact] = useState<FactType | null>(null)
+  const [counter, setCounter] = useState(1)
 
   const switchFact = () => {
-    setTeste(teste + 1);
-  };
+    setCounter(counter + 1)
+  }
 
   const turnFact = () => {
-    setRandomFact(randomFact === null);
-  };
+    setRandomFact(null)
+  }
 
-  const showFact = useEffect(() => {
-    const apiFetch = () => {
-      axios.get('https://catfact.ninja/fact').then((response) => {
-        setRandomFact(response.data);
-      });
-    };
-    apiFetch();
-  }, [teste]);
+  useEffect(() => {
+    const apiFetch = async () => {
+      try {
+        const response = await axios.get('https://catfact.ninja/fact')
+        setRandomFact(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    apiFetch()
+  }, [counter])
 
   return (
-    <div className="main-div">
-      <img className="cat-image" src="https://cataas.com/cat" alt="random cat image" />
+    <div className='main-div'>
+      {counter && (
+        <img
+          key={counter}
+          className='cat-image'
+          src={`https://cataas.com/cat?${counter}`}
+          alt='random cat image'
+        />
+      )}
 
-      <button className="cat-button" onClick={switchFact}>
+      <button
+        className='cat-button'
+        onClick={switchFact}
+      >
         Show a random fact
       </button>
-      <button className="cat-button" onClick={turnFact}>
+      <button
+        className='cat-button'
+        onClick={turnFact}
+      >
         Hide fact
       </button>
-      <h3 className="cat-fact">{randomFact.fact}</h3>
+      {randomFact && <h3 className='cat-fact'>{randomFact.fact}</h3>}
     </div>
-  );
+  )
 }

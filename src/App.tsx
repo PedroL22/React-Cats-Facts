@@ -1,15 +1,13 @@
-import React from 'react';
-import './App.css';
-import Facts from './components/Facts/Facts';
-import Header from './components/Header/Header';
+import './App.css'
 
-function App() {
+import { Facts } from './components/Facts/Facts'
+import { Header } from './components/Header/Header'
+
+export const App = () => {
   return (
-    <div className="App">
+    <div className='App'>
       <Header />
       <Facts />
     </div>
-  );
+  )
 }
-
-export default App;
